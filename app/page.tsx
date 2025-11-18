@@ -19,22 +19,31 @@ export default function Home() {
 
   // Funcionalidades del contacto
   const form = useRef<HTMLFormElement>(null)
-  const sendEmail = (e: React.FormEvent) => {
-    e.preventDefault()
 
+  useEffect(() => {
+    const key = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || "VarAhstFGiGxjqonR"
+    if (key) {
+      try {
+        emailjs.init(key)
+      } catch (err) {
+        console.warn("emailjs init failed", err)
+      }
+    }
+  }, [])
+
+  const sendEmail = async (e: React.FormEvent) => {
+    e.preventDefault()
     if (!form.current) return
 
-    emailjs
-      .sendForm("prueba1", "template_1alftpt", form.current, {
-        publicKey: "VarAhstFGiGxjqonR",
-      })
-
-      .then(() => {
-        alert("Mensaje enviado correctamente")
-      })
-      .catch(() => {
-        alert("Error al enviar el mensaje")
-      })
+    try {
+      await emailjs.sendForm("prueba1", "template_1alftpt", form.current)
+      alert("Mensaje enviado correctamente")
+      // opcional: limpiar estado del formulario
+      setFormData({ name: "", email: "", phone: "", company: "", message: "" })
+    } catch (err) {
+      console.error("EmailJS error:", err)
+      alert("Error al enviar el mensaje")
+    }
   }
 
   // Texto incorrecto ingresado en el fomulario
