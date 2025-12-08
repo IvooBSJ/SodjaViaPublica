@@ -12,21 +12,6 @@ import { ChevronRight, Menu, X, ArrowRight, Phone, Mail, MapPin, Clock, CheckCir
 import { Footer } from "@/components/footer"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import emailjs from "@emailjs/browser"
-import { MessageCircle } from "lucide-react"
-
-export function WhatsAppButton() {
-  return (
-    <a
-      href="https://wa.me/5493624531414?text=Hola,%20quiero%20información%20sobre%20publicidad%20exterior"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="fixed bottom-6 right-6 z-50 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-2xl transition-transform hover:scale-110 animate-pulse"
-      aria-label="Contactar por WhatsApp"
-    >
-      <MessageCircle className="w-6 h-6" />
-    </a>
-  )
-}
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
