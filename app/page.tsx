@@ -1,5 +1,5 @@
 "use client"
-
+import dynamic from "next/dynamic"
 import { useState, useEffect } from "react"
 import type React from "react"
 import { useRef } from "react"
@@ -12,6 +12,21 @@ import { ChevronRight, Menu, X, ArrowRight, Phone, Mail, MapPin, Clock, CheckCir
 import { Footer } from "@/components/footer"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import emailjs from "@emailjs/browser"
+import { MessageCircle } from "lucide-react"
+
+export function WhatsAppButton() {
+  return (
+    <a
+      href="https://wa.me/5493624531414?text=Hola,%20quiero%20información%20sobre%20publicidad%20exterior"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="fixed bottom-6 right-6 z-50 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-2xl transition-transform hover:scale-110 animate-pulse"
+      aria-label="Contactar por WhatsApp"
+    >
+      <MessageCircle className="w-6 h-6" />
+    </a>
+  )
+}
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -35,17 +50,35 @@ export default function Home() {
     e.preventDefault()
     if (!form.current) return
 
+    // Validación completa
+    const newErrors = {
+      name: formData.name.length < 2 ? "Nombre muy corto" : "",
+      email: !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email) ? "Email inválido" : "",
+      company: formData.company.length < 2 ? "Empresa requerida" : "",
+      message: formData.message.length < 10 ? "Mensaje muy corto (mín. 10 caracteres)" : "",
+      phone: formData.phone && !/^\+?[0-9]{8,}$/.test(formData.phone) ? "Teléfono inválido" : "",
+    }
+
+    setErrors(newErrors)
+    if (Object.values(newErrors).some((err) => err)) return
+
+    // Envío con feedback visual
+    const button = e.currentTarget.querySelector('button[type="submit"]') as HTMLButtonElement
+    button.disabled = true
+    button.textContent = "Enviando..."
+
     try {
       await emailjs.sendForm("prueba1", "template_1alftpt", form.current)
-      alert("Mensaje enviado correctamente")
-      // opcional: limpiar estado del formulario
+      alert("✅ Mensaje enviado. Te contactaremos pronto!")
       setFormData({ name: "", email: "", phone: "", company: "", message: "" })
     } catch (err) {
       console.error("EmailJS error:", err)
-      alert("Error al enviar el mensaje")
+      alert("❌ Error al enviar. Intenta nuevamente o llámanos al +54 362 4531414")
+    } finally {
+      button.disabled = false
+      button.textContent = "Enviar mensaje"
     }
   }
-
   // Texto incorrecto ingresado en el fomulario
   const [formData, setFormData] = useState({
     name: "",
@@ -253,6 +286,28 @@ export default function Home() {
     },
   ]
 */}
+    const cardVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    }
+  }
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  }
+  
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
@@ -472,7 +527,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="proyectos" className="py-20 bg-white">
+      <section id="trabajos" className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Trabajos Destacados</h2>

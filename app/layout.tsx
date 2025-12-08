@@ -1,6 +1,7 @@
-import type React from "react"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
+import "./globals.css"
+import type React from "react"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import Head from "next/head"
@@ -9,21 +10,61 @@ import Image from "next/image"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Sodja Via Publica - Publicidad Exterior",
-  description: "Especialistas en publicidad en vía pública: vallas, pantallas digitales y más",
-  generator: "Ivo Sodja",
-  keywords: [
-    "Comercio",
-    "carteles",
-    "Sodja Via Publica",
-    "sodja via publica",
-    "sodja via publica pagina",
-    "sodja via publica pagina web",
-    "sodja via publica ubicacion",
-  ],
-  icons: {
-    icon: "/images/logo.png", // Actualizado a la nueva imagen
+  title: "SODJA Vía Pública | Publicidad Exterior en Chaco - Vallas, Pantallas LED",
+  description:
+    "Empresa líder en publicidad exterior en Resistencia, Chaco. Vallas publicitarias, pantallas LED, carteleras ruteras. +15 años de experiencia, 200+ ubicaciones.",
+  keywords:
+    "publicidad exterior chaco, vallas publicitarias resistencia, pantallas led, cartelería chaco, publicidad vía pública",
+  authors: [{ name: "SODJA Vía Pública" }],
+  openGraph: {
+    title: "SODJA Vía Pública - Publicidad Exterior en Chaco",
+    description: "Vallas, pantallas LED y cartelería en ubicaciones estratégicas",
+    url: "https://www.sodjaviapublica.com",
+    siteName: "SODJA Vía Pública",
+    images: [{ url: "/images/logo.png", width: 800, height: 600 }],
+    locale: "es_AR",
+    type: "website",
   },
+  robots: {
+    index: true,
+    follow: true,
+  },
+}
+
+// Esquema JSON-LD para SEO avanzado
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  name: "SODJA Vía Pública",
+  image: "/images/logo.png",
+  "@id": "https://www.sodjaviapublica.com",
+  url: "https://www.sodjaviapublica.com",
+  telephone: "+54-362-4531414",
+  email: "sodjaletreros@gmail.com",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Av. Castelli 175",
+    addressLocality: "Resistencia",
+    addressRegion: "Chaco",
+    postalCode: "H3500",
+    addressCountry: "AR",
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: -27.4586,
+    longitude: -58.9920,
+  },
+  openingHoursSpecification: {
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+    opens: "09:00",
+    closes: "18:00",
+  },
+  sameAs: [
+    "https://www.facebook.com/people/SODJA-Via-Publica/100063490182954/",
+    "https://www.instagram.com/sodjaviapublica/",
+  ],
+  priceRange: "$$",
 }
 
 export default function RootLayout({
